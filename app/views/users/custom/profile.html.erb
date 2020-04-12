@@ -1,0 +1,47 @@
+<h2>Followers - <%=@followers.count%></h2><br>
+<%@followers.each do |user|%>
+<%= link_to user.email, profile_path(user.id)%> 
+<%#if current_user.followings.include?(user)%>
+<!-- <button user_id="<%=user.id%>" class="unfollow_me">Un-follow</button> -->
+<%#else%>
+<!-- <button user_id="<%=user.id%>" class="follow_me">Follow</button> -->
+<%#end%>
+<br>
+<%end%><br><br>
+<h2>Followings - <%=@followings.count%></h2><br>
+<%@followings.each do |user|%>
+<%= link_to user.email, profile_path(user.id)%> 
+<%#if current_user.followings.include?(user)%>
+<!-- <button user_id="<%=user.id%>" class="unfollow_me">Un-follow</button> -->
+<%#else%>
+<!-- <button user_id="<%=user.id%>" class="follow_me">Follow</button> -->
+<%#end%>
+<br>
+<%end%><br><br>
+
+
+ <script type="text/javascript">
+ 	$(document).on('click','.follow_me',function() {
+ 		var follower_id = <%= current_user.id %>;
+ 		var following_id = $(this).attr('user_id');
+
+ 		$.ajax({
+ 		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		url: '<%= follow_user_path %>',
+		data: {follower_id: follower_id, following_id: following_id},
+		method: "post"
+	});
+ 	});
+
+ 	$(document).on('click','.unfollow_me',function() {
+ 		var follower_id = <%= current_user.id %>;
+ 		var following_id = $(this).attr('user_id');
+
+ 		$.ajax({
+ 		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		url: '<%= unfollow_user_path %>',
+		data: {follower_id: follower_id, following_id: following_id},
+		method: "post"
+	});
+ 	});
+ </script>

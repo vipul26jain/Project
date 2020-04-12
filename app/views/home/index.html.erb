@@ -1,0 +1,44 @@
+<!-- <h1>Home#index</h1>
+<p>Find me in app/views/home/index.html.erb</p>
+ -->
+
+<%= form_for Tweet.new do |f| %>
+<%= f.text_field :content%>
+<%= f.hidden_field :user_id, value: current_user.id %>
+<%= f.submit%>
+<%end%><br><br>
+
+<div class="feed_tweets">
+<%= render partial: '/users/custom/partials/feed_tweets' %>
+</div>
+
+<div class="all_users">
+<%= render partial: '/users/custom/partials/all_users' %>
+</div>
+
+
+ <script type="text/javascript">
+ 	$(document).on('click','.follow_me',function() {
+ 		var follower_id = <%= current_user.id %>;
+ 		var following_id = $(this).attr('user_id');
+
+ 		$.ajax({
+ 		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		url: '<%= follow_user_path %>',
+		data: {follower_id: follower_id, following_id: following_id},
+		method: "post"
+	});
+ 	});
+
+ 	$(document).on('click','.unfollow_me',function() {
+ 		var follower_id = <%= current_user.id %>;
+ 		var following_id = $(this).attr('user_id');
+
+ 		$.ajax({
+ 		beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		url: '<%= unfollow_user_path %>',
+		data: {follower_id: follower_id, following_id: following_id},
+		method: "post"
+	});
+ 	});
+ </script>

@@ -1,0 +1,3 @@
+ <%@all_users.each do |user|%>
+ <%= link_to user.email, profile_path(user.id)%> <%if current_user.followings.include?(user)%><button user_id="<%=user.id%>" class="unfollow_me">Un-follow</button><%else%><button user_id="<%=user.id%>" class="follow_me">Follow</button><%end%><br>
+ <%end%>

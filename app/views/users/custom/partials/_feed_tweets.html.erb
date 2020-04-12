@@ -1,0 +1,3 @@
+<%@feed_tweets.each do |tweet|%>
+ <p>Tweet by - <%= link_to tweet.user.email, profile_path(tweet.user.id)%><br> Content - <%=tweet.content%></p>
+ <%end%><br><br>
